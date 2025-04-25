@@ -1,22 +1,85 @@
-# 🌤 **Desafio - Desenvolvedor Jr.**
+# Desafio - Desenvolvedor Jr.
 
-## 📌 Descrição
-Este projeto consiste na criação de uma API REST para buscar previsões do tempo de cidades utilizando uma API pública (OpenWeatherMap ou WeatherAPI) e armazená-las em um banco de dados. A API permite consultar dados históricos, filtrar previsões por cidade e data, além de excluir registros.
+A API desenvolvida realiza busca da previsão do tempo atual, de acordo com a cidade informada, e guarda no bando como foi estipulado o desafio.
 
----
+Para rodar o projeto será necessário instalar Python (configurar variáveis de ambiente), após isso, baixar o projeto.
 
-## 🚀 Tecnologias Que Podem Ser Utilizadas
-- **Linguagem:** Python 3.x  
-- **Framework:** FastAPI ou Flask  
-- **Banco de Dados:** SQLite ou PostgreSQL  
-- **ORM:** SQLAlchemy  
-- **API Externa:** OpenWeatherMap ou WeatherAPI  
-- **Versionamento de Código:** Git  
+Dentro da pasta raiz do projeto, rodar os seguintes comandos no terminal:
 
----
+# Criação e ativação do ambiente virtual
 
-## 📖 Instruções
+    - python -m venv venv
+    - source venv/bin/activate no Mac
+    - venv\Scripts\activate se for no Windows
 
-O candidato deverá desenvolver uma API REST que consulte previsões do tempo a partir de uma API pública (OpenWeatherMap ou WeatherAPI) e armazene os dados em um banco de dados.
+# Dependências necessárias
 
-Além disso, espera-se que o candidato implemente um fluxo ETL para garantir que os dados extraídos estejam organizados e acessíveis para outros times da empresa. O projeto pode incluir um WebHook para facilitar a automação do processo e integração com outras aplicações.
+    pip install fastapi uvicorn sqlalchemy python-dotenv pydantic-settings requests
+
+Dentro do arquivo .env, coloque sua API_KEY para validar o contato com WeatherAPI.
+
+Rode o arquivo main.py tudo estará funcionando.
+
+- Ambiente default utilizado: http://127.0.0.1:8000/
+
+Os seguintes endpoints estão disponíveis:
+
+# Inserção de previsão no banco
+
+Método POST - http://127.0.0.1:8000/weather/{city} - Realiza a inserção de dados passados através de JSON com nome da cidade.
+
+# Busca de previsões cadastradas
+
+Método GET - http://127.0.0.1:8000/weather/ - Realiza a busca das previsões cadastradas no banco.
+Exemplo de retorno:
+
+[
+{
+"city": "Rio Pomba",
+"country": "BR",
+"temperature": 19.49,
+"feels_like": 19.92,
+"temp_min": 19.49,
+"temp_max": 19.49,
+"pressure": 1017,
+"humidity": 93,
+"wind_speed": 0.29,
+"wind_deg": 139,
+"clouds": 100,
+"weather_description": "overcast clouds",
+"weather_main": "Clouds",
+"forecast_date": "2025-04-22T23:05:11",
+"id": 2,
+"timestamp": "2025-04-23T02:05:11"
+},
+{
+"city": "Miguel Pereira",
+"country": "BR",
+"temperature": 18.83,
+"feels_like": 18.81,
+"temp_min": 18.83,
+"temp_max": 18.83,
+"pressure": 1017,
+"humidity": 78,
+"wind_speed": 0.34,
+"wind_deg": 109,
+"clouds": 100,
+"weather_description": "overcast clouds",
+"weather_main": "Clouds",
+"forecast_date": "2025-04-22T23:03:08",
+"id": 3,
+"timestamp": "2025-04-23T02:05:22"
+},
+]
+
+# Busca através de ID
+
+Método GET - http://127.0.0.1:8000/weather/{weather_id} - Busca registro de acordo com o id passado
+
+# Remoção de dados do banco através de id
+
+Método DELETE - http://127.0.0.1:8000/weather/{weather_id} - Deleta registro de acordo com o id passado
+
+# Busca através de filtro de cidade e data
+
+Método GET - http://127.0.0.1:8000/weather/?city=Rio de Janeiro&date=2023-11-15' - Busca dados de acordo com a cidade e a data passadas na url
